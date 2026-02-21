@@ -15,7 +15,7 @@ export const CardFood = ({onclick, plate}:Props) => {
       <img src={plate.image} alt="pizza" />
       <Title>{plate.title}</Title>
       <Description>{plate.description}</Description>
-      <Button onClick={onclick}>Adicionar ao carrinho</Button>
+      <Button onClick={onclick}>Comprar o produto</Button>
     </Container>
   )
 }

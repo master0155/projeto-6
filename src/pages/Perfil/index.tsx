@@ -4,7 +4,7 @@ import { Footer } from '../../components/Footer'
 import { Header } from '../../components/Header'
 import { Button, Container, Description } from './style'
 import logo from '../../assets/images/logo.svg'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { CardFloat } from '../../components/CardFloat'
 import { RootReducer } from '../../store'
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,6 +16,7 @@ import { Delivery } from '../../components/Delivery'
 import { Pay } from '../../components/Pay'
 import { Order } from '../../components/Order'
 import { useNavigate, useParams } from 'react-router-dom'
+import { setItems } from '../../store/reducers/productsReducer'
 
 
 export const Perfil = () => {
@@ -37,6 +38,23 @@ export const Perfil = () => {
     setIsDishOpen(true)
     setPlate(item)
   }
+
+  useEffect(() => {
+    async function load() {
+      try{
+        const res = await fetch('https://api-ebac.vercel.app/api/efood/restaurantes')
+        const data = await res.json()
+        if(!restaurant) return
+        const found = data.find((r: any) => r.tipo === restaurant)
+        if(!found) return
+        const mapped = found.cardapio.map((p: any) => new Plate(p.id, p.foto, p.nome, p.descricao, p.preco))
+        dispatch(setItems(mapped))
+      }catch(err){
+        console.error('Erro ao carregar produtos', err)
+      }
+    }
+    load()
+  }, [restaurant, dispatch])
 
   function handleAddToCart(plate: Plate){
     dispatch(adicionar(plate))
