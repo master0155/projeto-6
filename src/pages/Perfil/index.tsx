@@ -1,3 +1,4 @@
+import React from 'react'
 import { Link } from 'react-router-dom'
 import { CardFood } from '../../components/CardFood'
 import { Footer } from '../../components/Footer'
