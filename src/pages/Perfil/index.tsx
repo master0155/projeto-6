@@ -19,6 +19,19 @@ import { Order } from '../../components/Order'
 import { useNavigate, useParams } from 'react-router-dom'
 import { setItems } from '../../store/reducers/productsReducer'
 
+type Restaurant = {
+  id: number
+  tipo: string
+  capa: string
+  titulo: string
+  cardapio: {
+    id: number
+    foto: string
+    nome: string
+    descricao: string
+    preco: number
+  }[]
+}
 
 export const Perfil = () => {
   const items = useSelector((state: RootReducer) => state.products.items)
@@ -34,6 +47,7 @@ export const Perfil = () => {
   const [pay, setPay] = useState(false)
   const [isFinished, setIsFinished] = useState(false)
   const [plate, setPlate] = useState<Plate>()
+  const [restaurantData, setRestaurantData] = useState<Restaurant | null>(null)
 
   function handleClick(item: Plate){
     setIsDishOpen(true)
@@ -44,11 +58,12 @@ export const Perfil = () => {
     async function load() {
       try{
         const res = await fetch('https://api-ebac.vercel.app/api/efood/restaurantes')
-        const data = await res.json()
+        const data: Restaurant[] = await res.json()
         if(!restaurant) return
-        const found = data.find((r: any) => r.tipo === restaurant)
+        const found = data.find((r) => r.tipo === restaurant)
         if(!found) return
-        const mapped = found.cardapio.map((p: any) => new Plate(p.id, p.foto, p.nome, p.descricao, p.preco))
+        setRestaurantData(found)
+        const mapped = found.cardapio.map((p) => new Plate(p.id, p.foto, p.nome, p.descricao, p.preco))
         dispatch(setItems(mapped))
       }catch(err){
         console.error('Erro ao carregar produtos', err)
@@ -92,10 +107,10 @@ export const Perfil = () => {
             </Button>
           </div>
         </div>
-        <Description>
+        <Description $backgroundImage={restaurantData?.capa}>
           <div className="container">
-            <span>{restaurant}</span>
-            <h3>La Dolce Vita Trattoria</h3>
+            <span>{restaurantData?.tipo ?? restaurant}</span>
+            <h3>{restaurantData?.titulo ?? ''}</h3>
           </div>
         </Description>
       </Header>

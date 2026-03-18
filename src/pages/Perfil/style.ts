@@ -27,9 +27,6 @@ export const Container = styled.div`
     }
     :nth-child(2) {
       width: 100%;
-      background-image: url('/src/assets/images/italiana.png');
-      background-repeat: no-repeat;
-      background-size: cover;
       color: ${colors.white};
     }
   }
@@ -47,10 +44,14 @@ export const Button = styled.button`
   color: ${colors.salmon};
   font-weight: bold;
 `
-export const Description = styled.div`
+export const Description = styled.div<{ $backgroundImage?: string }>`
   width: 100vw;
   height: 280px;
-  background-image: url('https://i.ibb.co/sKDTxx3/imagem-de-fundo.png');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(${(props) => props.$backgroundImage ?? ''});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   margin-top: 60px;
   color: ${colors.begie};
   .container{
