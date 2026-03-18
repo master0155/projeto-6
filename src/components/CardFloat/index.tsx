@@ -3,6 +3,7 @@ import { Button } from "../CardFood/style"
 import { ButtonClose, Card, Container } from "./style"
 import { IoClose } from "react-icons/io5";
 import { Plate } from "../../models/plate";
+import { formatPrice } from '../../utils/format'
 type Props = {
   onclose: () => void
   AddCart: () => void
@@ -21,7 +22,7 @@ export const CardFloat = ({ plate, AddCart, onclose}:Props) =>{
             <p>{plate.description}</p>
             <span>Serve: de 2 a 3 pessoas</span>
           </div>
-          <Button onClick={AddCart}>Adicionar ao carrinho - R$ {plate.value}</Button>
+          <Button onClick={AddCart}>Adicionar ao carrinho - {formatPrice(plate.value)}</Button>
         </div>
       </Card>
     </Container>
