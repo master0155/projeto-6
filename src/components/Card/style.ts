@@ -2,12 +2,15 @@ import styled from 'styled-components'
 import { colors } from '../../style'
 
 export const Container = styled.div`
-  width: 472px;
+  width: 100%;
+  max-width: 472px;
   background-color: #fff;
   color: ${colors.salmon};
   display: flex;
   flex-direction: column;
   position: relative;
+  margin: 0 auto;
+
   div {
     border-radius: 0 0 8px 8px;
     border: 1px solid ${colors.salmon};
@@ -33,8 +36,14 @@ export const Container = styled.div`
   }
 
   img {
+    width: 100%;
     border-radius: 8px 8px 0 0;
     height: 218px;
+    object-fit: cover;
+  }
+
+  @media (max-width: 768px) {
+    max-width: 100%;
   }
 `
 

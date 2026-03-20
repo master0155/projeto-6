@@ -2,16 +2,24 @@ import styled from 'styled-components'
 import { colors } from '../../style'
 
 export const Container = styled.div`
-  width: 320px;
+  width: 100%;
+  max-width: 320px;
   padding: 8px;
   background-color: ${colors.salmon};
   border-radius: 8px;
   display: grid;
   gap: 8px;
+  margin: 0 auto;
+
   img {
     width: 100%;
     max-height: 167px;
     border-radius: 8px 8px 0 0;
+    object-fit: cover;
+  }
+
+  @media (max-width: 768px) {
+    max-width: 100%;
   }
 `
 export const Title = styled.h3`

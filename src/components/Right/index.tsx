@@ -8,7 +8,7 @@ type Props ={
 export const Right = ({ onclick, children}:Props) => {
   return(
     <Container onClick={onclick}>
-      <Component>{children}</Component>
+      <Component onClick={(event) => event.stopPropagation()}>{children}</Component>
     </Container>
   )
 }

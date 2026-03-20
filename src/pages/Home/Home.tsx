@@ -3,33 +3,10 @@ import { Footer } from '../../components/Footer'
 import { Header } from '../../components/Header'
 import { Container } from './style'
 import logo from '../../assets/images/logo.svg'
-import { useEffect, useState } from 'react'
-
-type Restaurant = {
-  id: number
-  tipo: string
-  capa: string
-  titulo: string
-  avaliacao: number
-  descricao: string
-}
+import { useGetRestaurantesQuery } from '../../services/api'
 
 export const Home = () => {
-  const [restaurants, setRestaurants] = useState<Restaurant[]>([])
-
-  useEffect(() => {
-    async function loadRestaurants() {
-      try {
-        const res = await fetch('https://api-ebac.vercel.app/api/efood/restaurantes')
-        const data = await res.json()
-        setRestaurants(data)
-      } catch (error) {
-        console.error('Erro ao carregar restaurantes', error)
-      }
-    }
-
-    loadRestaurants()
-  }, [])
+  const { data: restaurants = [], isLoading, isError } = useGetRestaurantesQuery()
 
   return (
     <>
@@ -40,6 +17,8 @@ export const Home = () => {
         </div>
       </Header>
       <Container className="container">
+        {isLoading && <p>Carregando restaurantes...</p>}
+        {isError && <p>Erro ao carregar restaurantes.</p>}
         {restaurants.map((restaurant) => (
           <Card
             key={restaurant.id}

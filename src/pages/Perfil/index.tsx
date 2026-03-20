@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { CardFood } from '../../components/CardFood'
 import { Footer } from '../../components/Footer'
 import { Header } from '../../components/Header'
-import { Button, Container, Description } from './style'
+import { Button, Container } from './style'
 import logo from '../../assets/images/logo.svg'
 import { useState, useEffect } from 'react'
 import { CardFloat } from '../../components/CardFloat'
@@ -18,20 +18,8 @@ import { Pay } from '../../components/Pay'
 import { Order } from '../../components/Order'
 import { useNavigate, useParams } from 'react-router-dom'
 import { setItems } from '../../store/reducers/productsReducer'
-
-type Restaurant = {
-  id: number
-  tipo: string
-  capa: string
-  titulo: string
-  cardapio: {
-    id: number
-    foto: string
-    nome: string
-    descricao: string
-    preco: number
-  }[]
-}
+import { Banner } from '../../components/Banner'
+import { useGetRestauranteByTipoQuery } from '../../services/api'
 
 export const Perfil = () => {
   const items = useSelector((state: RootReducer) => state.products.items)
@@ -47,7 +35,10 @@ export const Perfil = () => {
   const [pay, setPay] = useState(false)
   const [isFinished, setIsFinished] = useState(false)
   const [plate, setPlate] = useState<Plate>()
-  const [restaurantData, setRestaurantData] = useState<Restaurant | null>(null)
+  const { data: restaurantsByType } = useGetRestauranteByTipoQuery(restaurant ?? '', {
+    skip: !restaurant
+  })
+  const restaurantData = restaurantsByType?.[0] ?? null
 
   function handleClick(item: Plate){
     setIsDishOpen(true)
@@ -55,22 +46,16 @@ export const Perfil = () => {
   }
 
   useEffect(() => {
-    async function load() {
-      try{
-        const res = await fetch('https://api-ebac.vercel.app/api/efood/restaurantes')
-        const data: Restaurant[] = await res.json()
-        if(!restaurant) return
-        const found = data.find((r) => r.tipo === restaurant)
-        if(!found) return
-        setRestaurantData(found)
-        const mapped = found.cardapio.map((p) => new Plate(p.id, p.foto, p.nome, p.descricao, p.preco))
-        dispatch(setItems(mapped))
-      }catch(err){
-        console.error('Erro ao carregar produtos', err)
-      }
+    if (!restaurantData) {
+      dispatch(setItems([]))
+      return
     }
-    load()
-  }, [restaurant, dispatch])
+
+    const mapped = restaurantData.cardapio.map(
+      (p) => new Plate(p.id, p.foto, p.nome, p.descricao, p.preco)
+    )
+    dispatch(setItems(mapped))
+  }, [restaurantData, dispatch])
 
   function handleAddToCart(plate: Plate){
     dispatch(adicionar(plate))
@@ -107,12 +92,11 @@ export const Perfil = () => {
             </Button>
           </div>
         </div>
-        <Description $backgroundImage={restaurantData?.capa}>
-          <div className="container">
-            <span>{restaurantData?.tipo ?? restaurant}</span>
-            <h3>{restaurantData?.titulo ?? ''}</h3>
-          </div>
-        </Description>
+        <Banner
+          backgroundImage={restaurantData?.capa}
+          category={restaurantData?.tipo ?? restaurant}
+          title={restaurantData?.titulo ?? ''}
+        />
       </Header>
       <div className="container">
         {items && items.map(item =>(

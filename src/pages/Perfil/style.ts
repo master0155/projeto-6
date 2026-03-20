@@ -12,28 +12,65 @@ export const Container = styled.div`
       width: 100%;
       display: flex;
       justify-content: space-between;
+
       .container {
         padding: 0;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
         align-items: center;
+        gap: 12px;
+
         img {
           margin: 0 auto;
           text-align: center;
         }
       }
+
       a {
         color: ${colors.salmon};
         text-align: left;
       }
     }
+
     :nth-child(2) {
       width: 100%;
       color: ${colors.white};
     }
   }
+
   .container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    row-gap: 32px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px 16px;
+  }
+
+  @media (max-width: 900px) {
+    .container {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px 12px;
+    }
+
+    ${HeaderContainer} {
+      .links {
+        .container {
+          grid-template-columns: 1fr;
+          justify-items: center;
+          gap: 8px;
+        }
+
+        a,
+        button {
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    .container {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
   }
 `
 export const Button = styled.button`
@@ -43,27 +80,4 @@ export const Button = styled.button`
   text-align: end;
   color: ${colors.salmon};
   font-weight: bold;
-`
-export const Description = styled.div<{ $backgroundImage?: string }>`
-  width: 100vw;
-  height: 280px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url(${(props) => props.$backgroundImage ?? ''});
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  margin-top: 60px;
-  color: ${colors.begie};
-  .container{
-    padding: 24px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
- }
-  span{
-    font-size: 32px;
-    font-weight: 100;
-  }
 `

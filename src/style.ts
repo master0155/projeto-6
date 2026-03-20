@@ -23,6 +23,12 @@ export const GlobalStyle = createGlobalStyle`
         max-width: 1024px;
         width: 100%;
         margin: 0 auto;
-        padding: 80px 0 120px 0;
+                padding: 80px 16px 120px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 48px 16px 72px;
+            }
     }
 `
