@@ -23,3 +23,9 @@ export const NumberAndCvv = styled.div`
 export const Last = styled.div`
   margin-top: 24px;
 `
+
+export const ErrorMessage = styled.p`
+  color: ${colors.begie};
+  font-size: 12px;
+  margin-top: 12px;
+`

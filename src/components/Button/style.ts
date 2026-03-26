@@ -16,4 +16,9 @@ export const Container = styled.button`
     background-color: transparent;
     color: ${colors.begie};
   }
+
+  :disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
 `

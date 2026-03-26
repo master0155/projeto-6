@@ -27,9 +27,12 @@ const carrinhoReducer = createSlice({
         const plateId = action.payload.id
         state.items = state.items.filter(item => item.id !== plateId)
       }
+    },
+    limpar: (state) => {
+      state.items = []
     }
   }
 })
 
-export const {adicionar, remover} = carrinhoReducer.actions;
+export const {adicionar, remover, limpar} = carrinhoReducer.actions;
 export default carrinhoReducer.reducer

@@ -18,6 +18,38 @@ export type RestaurantApi = {
     cardapio: CardapioItemApi[]
 }
 
+export type CheckoutPayload = {
+    products: Array<{
+        id: number
+        price: number
+    }>
+    delivery: {
+        receiver: string
+        address: {
+            description: string
+            city: string
+            zipCode: string
+            number: number
+            complement?: string
+        }
+    }
+    payment: {
+        card: {
+            name: string
+            number: string
+            code: number
+            expires: {
+                month: number
+                year: number
+            }
+        }
+    }
+}
+
+export type CheckoutResponse = {
+    orderId: string
+}
+
 const api = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({ baseUrl: 'https://api-ebac.vercel.app/api/efood' }),
@@ -30,6 +62,13 @@ const api = createApi({
         }),
         getRestauranteByTipo: builder.query<RestaurantApi[], string>({
             query: (tipo) => `/restaurantes?tipo=${tipo}`
+        }),
+        checkout: builder.mutation<CheckoutResponse, CheckoutPayload>({
+            query: (body) => ({
+                url: '/checkout',
+                method: 'POST',
+                body
+            })
         })
     })
 })
@@ -37,7 +76,8 @@ const api = createApi({
 export const {
     useGetRestaurantesQuery,
     useGetOnSaleQuery,
-    useGetRestauranteByTipoQuery
+    useGetRestauranteByTipoQuery,
+    useCheckoutMutation
 } = api
 
 export default api

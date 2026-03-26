@@ -2,12 +2,13 @@ import { Button } from "../Button"
 import { Container, Last, Thanks, Title } from "./style"
 type Props = {
   backToHome: () => void
+  orderId: string
 }
 
-export const Order = ({backToHome}:Props) => {
+export const Order = ({backToHome, orderId}:Props) => {
   return(
     <Container>
-      <Title>Pedido realizado - 7879564</Title>
+      <Title>Pedido realizado - {orderId}</Title>
       <Thanks>
         <p>
           Estamos felizes em informar que seu pedido já está em processo de preparação e, em breve, será entregue no endereço fornecido.

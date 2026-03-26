@@ -22,3 +22,11 @@ export const InputContainer = styled.input`
   font-weight: bold;
   outline: none;
 `
+
+export const ErrorText = styled.small`
+  display: block;
+  color: ${colors.begie};
+  margin-top: -4px;
+  margin-bottom: 8px;
+  font-size: 12px;
+`
