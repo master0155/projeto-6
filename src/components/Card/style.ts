@@ -10,14 +10,20 @@ export const Container = styled.div`
   flex-direction: column;
   position: relative;
   margin: 0 auto;
+  height: 100%;
 
   div {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     border-radius: 0 0 8px 8px;
     border: 1px solid ${colors.salmon};
     border-top: none;
     padding: 8px;
-    height: 100%;
+
     a {
+      align-self: flex-start;
+      margin-top: auto;
       padding: 4px 6px;
       font-size: 14px;
       background-color: ${colors.salmon};
@@ -64,6 +70,7 @@ export const Description = styled.p`
   font-size: 14px;
   line-height: 22px;
   margin: 16px 0;
+  flex: 1;
 `
 export const Tag = styled.span`
   background-color: ${colors.salmon};
