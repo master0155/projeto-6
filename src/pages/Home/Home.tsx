@@ -12,6 +12,9 @@ export const Home = () => {
     <>
       <Header>
         <img className="home-logo" src={logo} alt="efood" />
+        <h1 className="home-title">
+          Viva experiências gastronômicas no conforto da sua casa
+        </h1>
       </Header>
       <Section className="container">
         <SectionTitle>Todos os restaurantes</SectionTitle>

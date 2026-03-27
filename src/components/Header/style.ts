@@ -21,7 +21,11 @@ export const HeaderContainer = styled.header`
   }
 
   .home-logo {
-    margin-bottom: 0;
+    margin-bottom: 24px;
+  }
+
+  .home-title {
+    margin: 0;
   }
 
   h1 {
@@ -40,7 +44,12 @@ export const HeaderContainer = styled.header`
     }
 
     .home-logo {
-      margin-bottom: 0;
+      margin-bottom: 16px;
+      width: min(140px, 42vw);
+    }
+
+    .home-title {
+      padding: 0 16px;
     }
 
     h1 {
