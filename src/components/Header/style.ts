@@ -20,6 +20,10 @@ export const HeaderContainer = styled.header`
     height: auto;
   }
 
+  .home-logo {
+    margin-bottom: 0;
+  }
+
   h1 {
     font-size: 36px;
     line-height: 46px;
@@ -33,6 +37,10 @@ export const HeaderContainer = styled.header`
     img {
       margin-bottom: 56px;
       width: min(140px, 42vw);
+    }
+
+    .home-logo {
+      margin-bottom: 0;
     }
 
     h1 {
